@@ -2,8 +2,8 @@ import { ReactElement } from "react";
 
 interface ButtonProps {
   variant: "primary" | "secondary" | "outline" | "ghost" | "danger";
-  text: string;
-  size: "sm" | "md" | "lg";
+  text?: string;
+  size:"xs" |"sm" | "md" | "lg";
   onclick?: () => void;
   isDisable?: boolean;
   startIcon?: ReactElement;
@@ -14,21 +14,22 @@ const variantStyle = {
   primary: "bg-blue-600 text-white hover:bg-blue-700",
   secondary: "bg-zinc-100 text-zinc-700 hover:bg-zinc-200",
   outline:
-    "border-[1.5px] border-blue-600 text-blue-600 hover:text-blue-700 hover:border-blue-700",
+    "border border-zinc-300 p-1.5 rounded-md text-zinc-600 hover:text-zinc-700  hover:bg-zinc-200",
   ghost: "text-gray-700 hover:bg-gray-100",
   danger: "bg-red-600 text-white hover:bg-red-700",
 };
 
 const sizeStyle = {
+  xs : "text-sm p-1.5",
   sm: "text-sm px-3 py-1.5",
   md: "text-sm px-4 py-2.5",
   lg: "text-base px-6 py-3",
 };
 
 const defaultStyles =
-  "flex justify-center items-center rounded-lg gap-2 m-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed";
+  "flex justify-center items-center rounded-lg gap-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors";
 
-function button(props: ButtonProps) {
+export default function Button(props: ButtonProps) {
   return (
     <button
       disabled={props.isDisable}
@@ -43,4 +44,4 @@ function button(props: ButtonProps) {
   );
 }
 
-export default button;
+
