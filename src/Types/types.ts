@@ -11,9 +11,9 @@ export interface Tags {
 
 export interface Contents{
     _id:string,
+    title: string;
     link: string;
     type: "twitter" | "youtube";
-    title: string;
     description?: string;
     tags: Tags[];
     userId: User;

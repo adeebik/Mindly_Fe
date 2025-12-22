@@ -3,8 +3,13 @@ import Button from "./Button";
 import Tags from "./Tags";
 import { Contents } from "../Types/types";
 
+interface CardProps{
+  content: Contents
+  onShare?:()=> void,
+  onDelete?:()=> void,
+}
 
-export default function Card(content: Contents , onShare:()=>void , onDelete:()=>void ) {
+export default function Card({content , onShare , onDelete} : CardProps ) {
   return (
     <>
       <div className="border border-zinc-300 bg-white max-w-80 min-h-80 min-w-80 min-h-80 rounded-md p-3">
@@ -35,7 +40,7 @@ export default function Card(content: Contents , onShare:()=>void , onDelete:()=
           {content.type == "youtube" ? (
             <div className="player rounded-md overflow-hidden">
               <iframe
-                src="https://www.youtube.com/embed/dfqz4o1QPCk?si=JIa_x0V94LKhuvsJ"
+                src={content.link}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -69,10 +74,7 @@ export default function Card(content: Contents , onShare:()=>void , onDelete:()=
           )}
         </div>
         <div className="tags mb-2 flex gap-1 flex-wrap">
-          <Tags title="startup" />
-          <Tags title="education" />
-          <Tags title="projects" />
-          <Tags title="learn" />
+          {content.tags.map(tag => <Tags title={tag.title}/>) }
         </div>
         <div className="date">
           <p className="text-xs text-zinc-600">{content.createdAt}</p>

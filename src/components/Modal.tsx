@@ -6,9 +6,16 @@ interface ModalProps {
   title: string;
   open: boolean;
   onClose: () => void;
+  size: "sm" | "md" | "lg"
 }
 
-function Modal({ children, title, open, onClose }: ModalProps) {
+const sizeStyle = {
+  "sm" : "max-w-lg",
+  "md" : "max-w-xl",
+  "lg" : "max-w-2xl"
+}
+
+function Modal({ children, title, open, onClose , size }: ModalProps) {
   return (
     <>
       {open && (
@@ -17,18 +24,18 @@ function Modal({ children, title, open, onClose }: ModalProps) {
             className="absolute inset-0 bg-slate-400 opacity-90"
             onClick={onClose}
           />
-          <div className="relative rounded-lg max-h-[90vh] flex w-full max-w-lg bg-white relative opacity-100 z-10">
+          <div className={`relative rounded-lg max-h-[90vh] flex w-full ${sizeStyle[size]} bg-white relative opacity-100 z-10` }>
             <div className="insideModal w-full">
-              <div className="top flex justify-between items-center border-b border-slate-200 p-3">
-                <div className="title">{title}</div>
+              <div className="top flex justify-between items-center border-b border-slate-200 py-4 px-6" >
+                <div className="title font-semibold text-lg">{title}</div>
                 <button
                   onClick={onClose}
                   className="icon text-zinc-600 cursor-pointer"
                 >
-                  <X />
+                  <X size={20} />
                 </button>
               </div>
-              <div className="inputs p-3 flex flex-col gap-2">{children}</div>
+              <div className="inputs p-6">{children}</div>
             </div>
           </div>
         </div>

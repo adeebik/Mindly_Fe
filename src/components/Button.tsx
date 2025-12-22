@@ -9,6 +9,7 @@ interface ButtonProps {
   startIcon?: ReactElement;
   fullWidth?: boolean;
   type?: "submit" | "button";
+  children?: ReactElement,
 }
 
 const variantStyle = {
@@ -42,6 +43,7 @@ export default function Button(props: ButtonProps) {
     >
       {props.startIcon}
       {props.text}
+      {props.children}
     </button>
   );
 }
