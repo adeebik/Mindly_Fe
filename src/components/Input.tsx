@@ -1,12 +1,12 @@
 interface InputProps {
-  title?: string;
+  label?: string;
   placeholder?: string;
 }
 
-export default function Input({ title, placeholder }: InputProps) {
+export default function Input({ label, placeholder }: InputProps) {
   return (
     <div className="w-full flex flex-col gap-1">
-      {title && <label className="text-zinc-800 text-sm">{title}</label>}
+      {label && <label className="text-zinc-800 text-sm">{label}</label>}
       <input
         placeholder={placeholder}
         className="border border-slate-300 px-2 py-3 rounded-lg text-sm focus:border-blue-500 focus:outline focus:outline-blue-500 

@@ -28,7 +28,7 @@ function Modal({ children, title, open, onClose }: ModalProps) {
                   <X size={20} />
                 </button>
               </div>
-              <div className="inputs p-6 flex flex-col gap-2">{children}</div>
+              <div className="inputs p-6">{children}</div>
             </div>
           </div>
         </div>
