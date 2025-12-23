@@ -2,82 +2,66 @@ import { Share2, Trash2 } from "lucide-react";
 import Button from "./Button";
 import Tags from "./Tags";
 import { Contents } from "../Types/types";
+import YoutubeEmbed from "./YoutubeEmbed";
+import TwitterEmbed from "./TwitterEmbed";
 
-interface CardProps{
-  content: Contents
-  onShare?:()=> void,
-  onDelete?:()=> void,
+interface CardProps {
+  content: Contents;
+  onShare?: () => void;
+  onDelete?: () => void;
 }
 
-export default function Card({content , onShare , onDelete} : CardProps ) {
+export default function Card({ content, onShare, onDelete }: CardProps) {
   return (
     <>
-      <div className="border border-zinc-300 bg-white  rounded-md p-3">
-        <div className="titleBtn mb-2 gap-2 flex justify-between items-center">
-          <div className="title font-medium line-clamp-2">{content.title}</div>
-          <div className="buttons flex gap-1">
-            <Button
-              variant="outline"
-              onclick={onShare}
-              size="xs"
-              startIcon={<Share2 size={16} />}
-            />
-            <Button
-              variant="outline"
-              onclick={onDelete}
-              size="xs"
-              startIcon={<Trash2 size={16} />}
-            />
+      <div className="border border-zinc-300 bg-white  rounded-md p-3 flex flex-col justify-between">
+
+        <div className="top">
+          <div className="titleBtn mb-2 gap-2 flex justify-between items-center">
+            <div className="title font-medium line-clamp-2">
+              {content.title}
+            </div>
+            <div className="buttons flex gap-1">
+              <Button
+                variant="outline"
+                onclick={onShare}
+                size="xs"
+                startIcon={<Share2 size={16} />}
+              />
+              <Button
+                variant="outline"
+                onclick={onDelete}
+                size="xs"
+                startIcon={<Trash2 size={16} />}
+              />
+            </div>
+          </div>
+          <div className="desc mb-2">
+            <p className="text-sm text-zinc-600 line-clamp-2">
+              {content.description}
+            </p>
           </div>
         </div>
-        <div className="desc mb-2">
-          <p className="text-sm text-zinc-600 line-clamp-2">
-            {content.description}
-          </p>
+
+        <div className="mid">
+          <div className="relative embed mb-3 w-full">
+            {content.type == "youtube" ? (
+              <YoutubeEmbed url={content.link} />
+            ) : (
+              <TwitterEmbed/>
+            )}
+          </div>
         </div>
 
-        <div className="relative embed mb-3 w-full">
-          {content.type == "youtube" ? (
-            <div className="player rounded-md overflow-hidden">
-              <iframe 
-                src={content.link}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-          ) : (
-            <div className="tweet">
-              <blockquote className="twitter-tweet">
-                <p lang="en" dir="ltr">
-                  <a href="https://twitter.com/kirat_tw?ref_src=twsrc%5Etfw">
-                    @kirat_tw
-                  </a>{" "}
-                  Dropped another bomb.<br></br> Excited to join and Explore{" "}
-                  <a href="https://t.co/Fw0vIit1iY">
-                    pic.twitter.com/Fw0vIit1iY
-                  </a>
-                </p>
-                &mdash; Ayush Gopal (@iamAyushgopal){" "}
-                <a href="https://twitter.com/iamAyushgopal/status/2002742332660257012?ref_src=twsrc%5Etfw">
-                  December 21, 2025
-                </a>
-              </blockquote>{" "}
-              <script
-                async
-                src="https://platform.twitter.com/widgets.js"
-                charSet="utf-8"
-              ></script>
-            </div>
-          )}
-        </div>
-        <div className="tags mb-2 flex gap-1 flex-wrap">
-          {content.tags.map(tag => <Tags title={tag.title}/>) }
-        </div>
-        <div className="date">
-          <p className="text-xs text-zinc-600">{content.createdAt}</p>
+        <div className="bottom">
+          <div className="tags mb-2 flex gap-1 flex-wrap">
+            {content.tags.map((tag) => (
+              <Tags title={tag.title} />
+            ))}
+          </div>
+          <div className="date">
+            <p className="text-xs text-zinc-600">{content.createdAt}</p>
+          </div>
         </div>
       </div>
     </>

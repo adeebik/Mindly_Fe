@@ -6,7 +6,7 @@ import Sidebar from "../Layout/Sidebar";
     {
       _id: "5",
       title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
+      link: "https://youtu.be/K9R7KcaettM",
       type: "youtube",
       description: "Complete guide to system design concepts and patterns",
       tags: [
@@ -19,8 +19,8 @@ import Sidebar from "../Layout/Sidebar";
     {
       _id: "6",
       title: "React Hooks Tutorial",
-      link: "https://youtu.be/0WS5eq9fOYk",
-      type: "twitter",
+      link: "https://www.youtube.com/watch?v=PIyf0hMc498&list=RDGMEMCMFH2exzjBeE_zAHHJOdxgVMK9R7KcaettM&index=2",
+      type: "youtube",
       tags: [
         { _id: "10", title: "react" },
         { _id: "11", title: "tutorial" },
@@ -30,80 +30,8 @@ import Sidebar from "../Layout/Sidebar";
     },{
       _id: "5",
       title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
-      type: "youtube",
-      description: "Complete guide to system design concepts and patterns",
-      tags: [
-        { _id: "9", title: "systemdesign" },
-        { _id: "7", title: "tech" },
-      ],
-      userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
-      createdAt: new Date(2024, 11, 8).toDateString(),
-    },{
-      _id: "5",
-      title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
-      type: "youtube",
-      description: "Complete guide to system design concepts and patterns",
-      tags: [
-        { _id: "9", title: "systemdesign" },
-        { _id: "7", title: "tech" },
-      ],
-      userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
-      createdAt: new Date(2024, 11, 8).toDateString(),
-    },{
-      _id: "5",
-      title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
-      type: "youtube",
-      description: "Complete guide to system design concepts and patterns",
-      tags: [
-        { _id: "9", title: "systemdesign" },
-        { _id: "7", title: "tech" },
-      ],
-      userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
-      createdAt: new Date(2024, 11, 8).toDateString(),
-    },{
-      _id: "5",
-      title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
-      type: "youtube",
-      description: "Complete guide to system design concepts and patterns",
-      tags: [
-        { _id: "9", title: "systemdesign" },
-        { _id: "7", title: "tech" },
-      ],
-      userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
-      createdAt: new Date(2024, 11, 8).toDateString(),
-    },{
-      _id: "5",
-      title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
-      type: "youtube",
-      description: "Complete guide to system design concepts and patterns",
-      tags: [
-        { _id: "9", title: "systemdesign" },
-        { _id: "7", title: "tech" },
-      ],
-      userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
-      createdAt: new Date(2024, 11, 8).toDateString(),
-    },{
-      _id: "5",
-      title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
-      type: "youtube",
-      description: "Complete guide to system design concepts and patterns",
-      tags: [
-        { _id: "9", title: "systemdesign" },
-        { _id: "7", title: "tech" },
-      ],
-      userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
-      createdAt: new Date(2024, 11, 8).toDateString(),
-    },{
-      _id: "5",
-      title: "System Design Fundamentals",
-      link: "https://www.youtube.com/embed?v=4DWmifnIBBI",
-      type: "youtube",
+      link: "https://youtu.be/K9R7KcaettM",
+      type: "twitter",
       description: "Complete guide to system design concepts and patterns",
       tags: [
         { _id: "9", title: "systemdesign" },
@@ -112,6 +40,18 @@ import Sidebar from "../Layout/Sidebar";
       userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
       createdAt: new Date(2024, 11, 8).toDateString(),
     },
+    {
+      _id: "6",
+      title: "React Hooks Tutorial",
+      link: "https://www.youtube.com/watch?v=PIyf0hMc498&list=RDGMEMCMFH2exzjBeE_zAHHJOdxgVMK9R7KcaettM&index=2",
+      type: "youtube",
+      tags: [
+        { _id: "10", title: "react" },
+        { _id: "11", title: "tutorial" },
+      ],
+      userId: { id: "1", email: "demo@brainly.app", name: "Demo User" },
+      createdAt: new Date(2024, 11, 5).toDateString(),
+    }
   ];
 
 
@@ -141,4 +81,3 @@ export default function Dashboard() {
     </>
   )
 }
-
