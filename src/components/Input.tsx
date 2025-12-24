@@ -2,13 +2,15 @@ interface InputProps {
   type?: "text" | "mail" | "password"
   label?: string;
   placeholder?: string;
+  reference?: any
 }
 
-export default function Input({type, label, placeholder }: InputProps) {
+export default function Input({reference, type, label, placeholder }: InputProps) {
   return (
     <div className="w-full flex flex-col gap-1">
       {label && <label className="text-zinc-800 text-sm">{label}</label>}
       <input
+        ref={reference}
         type={type}
         placeholder={placeholder}
         className="border border-slate-300 px-3 py-3 rounded-lg text-sm focus:border-blue-500 focus:outline focus:outline-blue-500 

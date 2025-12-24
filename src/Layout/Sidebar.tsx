@@ -1,7 +1,8 @@
 import { Plus, Twitter, Youtube } from "lucide-react";
 import Button from "../components/Button";
 
-export default function Sidebar() {
+
+export default function Sidebar({toggleModal} : {toggleModal: ()=>void}) {
   return (
     <div className="fixed flex flex-col mt-14 w-64 bg-white h-screen border-r border-zinc-200 p-4 gap-4">
       <Button
@@ -10,6 +11,7 @@ export default function Sidebar() {
         fullWidth={true}
         text="Add Content"
         startIcon={<Plus size={16} />}
+        onclick={toggleModal}
       />
       <div className="border-b border-zinc-300 ">
         <p className="text-xs mb-2 font-semibold text-gray-700 uppercase tracking-wide">

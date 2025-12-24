@@ -4,23 +4,27 @@ import Input from "../components/Input";
 import Auth from "../Layout/Auth";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Signup() {
-  const nameRef = useRef<HTMLInputElement>();
-  const userRef = useRef<HTMLInputElement>();
-  const passRef = useRef<HTMLInputElement>();
+  const navigate = useNavigate()
+  const nameRef = useRef<HTMLInputElement>(null);
+  const userRef = useRef<HTMLInputElement>(null);
+  const passRef = useRef<HTMLInputElement>(null);
 
   async function signup (){
-    const username = nameRef.current.value
-    const usermail = userRef.current.value;
-    const password = passRef.current.value;
+    const username = nameRef.current?.value
+    const usermail = userRef.current?.value;
+    const password = passRef.current?.value;
 
     await axios.post(`${BACKEND_URL + "/users/signup"}`, {
       name: username,
       email: usermail,
       password: password
     } )
+
+    navigate('/signin')
     alert("Signed Up!")
   }
 
