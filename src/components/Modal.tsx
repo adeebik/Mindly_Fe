@@ -21,7 +21,7 @@ function Modal({ children, title, open, onClose , size }: ModalProps) {
       {open && (
         <div className="fixed inset-0 z-10 flex justify-center items-center">
           <div
-            className="absolute inset-0 bg-slate-400 opacity-90"
+            className="absolute inset-0 bg-gray-900 opacity-50"
             onClick={onClose}
           />
           <div className={`relative rounded-lg max-h-[90vh] flex w-full ${sizeStyle[size]} bg-white relative opacity-100 z-10` }>
