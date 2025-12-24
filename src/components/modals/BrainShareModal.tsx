@@ -22,7 +22,7 @@ export default function BrainShareModal({
 
   return (
     <div>
-      <Modal size="md" title="Share Content" open={open} onClose={onClose}>
+      <Modal size="md" title="Share Brain" open={open} onClose={onClose}>
         <div className="space-y-4">
           <p className="text-sm text-gray-600">
             Share your entire collection with anyone using this link
