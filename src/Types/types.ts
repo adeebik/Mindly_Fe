@@ -13,7 +13,7 @@ export interface Contents{
     _id:string,
     title: string;
     link: string;
-    type: "twitter" | "youtube";
+    type: string;
     description?: string;
     tags: Tags[];
     userId: User;

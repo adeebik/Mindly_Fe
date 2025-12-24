@@ -19,16 +19,13 @@ export default function Sidebar({toggleModal} : {toggleModal: ()=>void}) {
         </p>
         <div className="flex flex-col gap-1 mb-3">
           <button className="w-full flex p-2.5 text-sm flex-start focus:bg-blue-50 focus:text-blue-600 focus:font-medium rounded-md text-zinc-600 hover:bg-zinc-50 transition-all">
-            {" "}
-            All Content{" "}
+            All Content
           </button>
           <button className="w-full flex items-center gap-2 p-2.5 text-sm flex-start focus:bg-blue-50 focus:text-blue-600 focus:font-medium rounded-md text-zinc-600 hover:bg-zinc-50 transition-all">
-            {" "}
-            <Youtube size={20} /> Youtube{" "}
+            <Youtube size={20} /> Youtube
           </button>
           <button className="w-full flex items-center gap-2 p-2.5 text-sm flex-start focus:bg-blue-50 focus:text-blue-600 focus:font-medium rounded-md text-zinc-600 hover:bg-zinc-50 transition-all">
-            {" "}
-            <Twitter size={20} /> Twitter{" "}
+            <Twitter size={20} /> Twitter
           </button>
         </div>
       </div>
