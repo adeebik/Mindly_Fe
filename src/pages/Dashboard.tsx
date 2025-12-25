@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import AddContentModal from "../components/modals/AddContentModal";
 import BrainShareModal from "../components/modals/BrainShareModal";
@@ -6,9 +6,11 @@ import ShareComponentModal from "../components/modals/ShareComponentModal";
 import Navbar from "../Layout/Navbar";
 import Sidebar from "../Layout/Sidebar";
 import {
+  Filters,
   useAddModalStore,
   useAllContentsStore,
   useBrainShareModalStore,
+  useFilterStore,
   useShareModalStore,
 } from "../Store/store";
 
@@ -24,24 +26,43 @@ export default function Dashboard() {
 
   const { contents, fetchContent, loading } = useAllContentsStore();
 
+  const selectedFilter = useFilterStore((state) => state.filter)
+  const setSelectedFilter = useFilterStore((state) => state.setFilter)
+ 
+  const filtered= selectedFilter === Filters.All
+  ? contents
+  : contents.filter((c) => c.type === selectedFilter);
+
+
   useEffect(() => {
     fetchContent();
 
     let interval = setInterval(() => {
       fetchContent();
       console.log("refreshing");
-      
     }, 30000);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [addmodal]);
+
+  const username =
+    contents.length > 0 && contents[0]?.userId?.name
+      ? contents[0].userId.name
+      : "User";
 
   return (
     <>
-      <Navbar toggleModal={toggleBrain} />
-      <Sidebar toggleModal={toggleAdd} />
+      <Navbar username={username} toggleModal={toggleBrain} />
+      <Sidebar
+        selected={selectedFilter}
+        setFilter={setSelectedFilter}
+        toggleModal={toggleAdd}
+        totalCount={contents.length}
+        youtubeCount={contents.filter((c) => c.type === "youtube").length}
+        twitterCount={contents.filter((c) => c.type === "twitter").length}
+      />
 
       {loading && contents.length === 0 ? (
         <div className="main ml-64 pt-14 bg-zinc-50 min-h-screen flex items-center justify-center">
@@ -52,20 +73,18 @@ export default function Dashboard() {
         </div>
       ) : (
         <>
-          <div className="main ml-64 pt-14 bg-zinc-50 min-h-screen">
+          <div className="main ml-64 pt-14 bg-slate-100 min-h-screen">
             <div className="inside p-5">
               <div className="title mb-5">
                 <p className="text-xl font-medium text-zinc-800">All Content</p>
                 <p className="text-sm text-zinc-600">{contents.length} items</p>
               </div>
               <div className="card">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-4">
-                  {contents.map((content) => (
-                    <Card
-                      key={content._id}
-                      content={content}
-                      onShare={toggleShare}
-                    />
+                <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+                  {filtered.map((content) => (
+                    <div key={content._id} className="break-inside-avoid mb-4">
+                      <Card content={content} onShare={toggleShare} />
+                    </div>
                   ))}
                 </div>
               </div>

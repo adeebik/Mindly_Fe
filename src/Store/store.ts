@@ -65,15 +65,35 @@ export const useAllContentsStore = create<AllContent>((set) => ({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      const data = response.data.contents
+      const data = response.data.contents;
 
-      set({ contents: data , loading: false});
+      set({ contents: data, loading: false });
     } catch (error) {
       console.error("Fetch error:", error);
-      set({ 
+      set({
         error: "Failed to fetch contents",
-        loading: false 
+        loading: false,
       });
-    } 
+    }
+  },
+}));
+
+
+
+export enum Filters {
+  All = "all",
+  Youtube = "youtube",
+  Twitter = "twitter",
+}
+
+interface filterStore {
+  filter: Filters;
+  setFilter: (arg: Filters) => void;
+}
+
+export const useFilterStore = create<filterStore>((set) => ({
+  filter: Filters.All,
+  setFilter: (filter: Filters) => {
+    set({ filter: filter });
   },
 }));
