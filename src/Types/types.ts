@@ -17,5 +17,5 @@ export interface Contents{
     description?: string;
     tags: Tags[];
     userId: User;
-    createdAt: String
+    createdAt: string
 }

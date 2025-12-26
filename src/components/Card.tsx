@@ -8,14 +8,13 @@ import TwitterEmbed from "./TwitterEmbed";
 interface CardProps {
   content: Contents;
   onShare?: () => void;
-  onDelete?: () => void;
+  onDelete?: (arg: string) => void;
 }
 
 export default function Card({ content, onShare, onDelete }: CardProps) {
   return (
     <>
       <div className="border border-zinc-300 bg-white  rounded-md p-3 flex flex-col justify-between">
-
         <div className="top">
           <div className="titleBtn mb-2 gap-2 flex justify-between items-center">
             <div className="title font-medium line-clamp-2">
@@ -26,13 +25,13 @@ export default function Card({ content, onShare, onDelete }: CardProps) {
                 variant="outline"
                 onclick={onShare}
                 size="xs"
-                startIcon={<Share2 size={16} />}
+                startIcon={<Share2 size={14} />}
               />
               <Button
-                variant="outline"
-                onclick={onDelete}
+                variant="dangerOutline"
+                onclick={() => onDelete?.(content._id)}
                 size="xs"
-                startIcon={<Trash2 size={16} />}
+                startIcon={<Trash2 size={14} />}
               />
             </div>
           </div>
@@ -48,7 +47,7 @@ export default function Card({ content, onShare, onDelete }: CardProps) {
             {content.type == "youtube" ? (
               <YoutubeEmbed url={content.link} />
             ) : (
-              <TwitterEmbed url={content.link}/>
+              <TwitterEmbed url={content.link} />
             )}
           </div>
         </div>

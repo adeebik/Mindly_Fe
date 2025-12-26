@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 interface ButtonProps {
-  variant: "primary" | "secondary" | "outline" | "ghost" | "danger";
+  variant: "primary" | "secondary" | "outline" | "ghost" | "danger" | "dangerOutline";
   text?: string;
   size: "xs" | "sm" | "md" | "lg";
   onclick?: () => void;
@@ -16,9 +16,10 @@ const variantStyle = {
   primary: "bg-blue-600 text-white hover:bg-blue-700",
   secondary: "bg-zinc-100 text-zinc-700 hover:bg-zinc-200",
   outline:
-    "border border-zinc-300 p-1.5 rounded-md text-zinc-600 hover:text-zinc-700  hover:bg-zinc-200",
+    "border bg-white border-zinc-300 rounded-md text-zinc-600 hover:text-zinc-700  hover:bg-zinc-100",
   ghost: "text-gray-700 hover:bg-gray-100",
   danger: "bg-red-600 text-white hover:bg-red-700",
+  dangerOutline : "border bg-white border-zinc-300 rounded-md text-zinc-600 hover:border-red-200 hover:bg-red-50 hover:text-red-500",
 };
 
 const sizeStyle = {
@@ -29,7 +30,7 @@ const sizeStyle = {
 };
 
 const defaultStyles =
-  "flex justify-center items-center rounded-lg gap-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors";
+  "flex justify-center items-center rounded-lg gap-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer";
 
 export default function Button(props: ButtonProps) {
   return (

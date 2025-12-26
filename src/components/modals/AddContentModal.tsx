@@ -34,6 +34,7 @@ export default function AddContentModal({ open, onClose }: AddContentProps) {
         {
           title: title,
           type: type,
+          description: description,
           link: link,
           tag: []
         },{

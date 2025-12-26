@@ -33,7 +33,7 @@ export default function Signin() {
     <Auth
       title="Welcome Back"
       subtitle="Sign in to your account"
-      redirectLink=""
+      redirectLink="/signup"
       redirectText="Sign up"
       redirectTitle="Don't have an account? "
     >
