@@ -25,6 +25,17 @@ interface userType {
   setType: (arg: ContentType) => void;
 }
 
+export enum Filters {
+  All = "all",
+  Youtube = "youtube",
+  Twitter = "twitter",
+}
+
+interface filterStore {
+  filter: Filters;
+  setFilter: (arg: Filters) => void;
+}
+
 export const useType = create<userType>((set) => ({
   type: ContentType.Youtube,
   setType: (type) => {
@@ -60,7 +71,7 @@ export const useAllContentsStore = create<AllContent>((set) => ({
   fetchContent: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.get(`${BACKEND_URL + "/dashboard"}`, {
+      const response = await axios.get(`${BACKEND_URL}/dashboard`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -78,22 +89,64 @@ export const useAllContentsStore = create<AllContent>((set) => ({
   },
 }));
 
-
-
-export enum Filters {
-  All = "all",
-  Youtube = "youtube",
-  Twitter = "twitter",
-}
-
-interface filterStore {
-  filter: Filters;
-  setFilter: (arg: Filters) => void;
-}
-
 export const useFilterStore = create<filterStore>((set) => ({
   filter: Filters.All,
   setFilter: (filter: Filters) => {
     set({ filter: filter });
+  },
+}));
+
+type SharedCont = {
+  link : string
+  isShared : boolean
+}
+
+interface ContentShareStore{
+  sharedContents: Record <string, SharedCont>
+  loading : boolean;
+  error : any ;
+  toggleContent : (contentId : string , share : boolean) => void,
+}
+
+export const useContentShareStore = create<ContentShareStore>((set , get ) => ({
+  sharedContents: {},
+  loading: false,
+  error: null,
+  toggleContent: async (contentId, share) => {
+    set({loading: true })
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/share/contentShare`,
+        {
+          contentId: contentId,
+          share: share,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (share) {
+        const getlink = response.data.link;
+        set({
+          sharedContents: {
+            ...get().sharedContents,
+            [contentId]: { link: getlink, isShared: share },
+          },
+          loading: false,
+        });
+      } else {
+        const updatedContents = {...get().sharedContents}
+        delete updatedContents[contentId];
+        set({
+          sharedContents: updatedContents,
+          loading: false,
+        });
+      }
+    } catch (error) {
+
+    }
   },
 }));

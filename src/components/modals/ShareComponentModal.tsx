@@ -23,7 +23,7 @@ export default function ShareComponentModal({
 
   return (
     <div>
-      <Modal size="md" title="Share Content" open={open} onClose={onClose}>
+      <Modal size="sm" title="Share Content" open={open} onClose={onClose}>
         <div className="space-y-4">
           <p className="text-sm text-gray-600">
             Share this content with anyone using this link
