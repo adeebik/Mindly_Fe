@@ -43,7 +43,10 @@ export default function AddContentModal({ open, onClose }: AddContentProps) {
           },
         }
       );
+
     } catch (error) {}
+
+    onClose();
   }
 
   return (

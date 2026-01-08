@@ -27,7 +27,7 @@ export default function ShareComponentModal({
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(shareLink);
+    navigator.clipboard.writeText(FRONTEND_URL + `/shared-content/` + shareLink);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

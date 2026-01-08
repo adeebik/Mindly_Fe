@@ -131,7 +131,6 @@ export default function Dashboard() {
           />
 
           <BrainShareModal
-            link="http://"
             open={brainmodal}
             onClose={toggleBrain}
           />
