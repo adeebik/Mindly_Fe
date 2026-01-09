@@ -130,10 +130,7 @@ export default function Dashboard() {
             contentId={ShareId}
           />
 
-          <BrainShareModal
-            open={brainmodal}
-            onClose={toggleBrain}
-          />
+          <BrainShareModal open={brainmodal} onClose={toggleBrain} />
           <AddContentModal open={addmodal} onClose={toggleAdd} />
         </>
       )}
