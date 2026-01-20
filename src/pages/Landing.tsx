@@ -94,7 +94,7 @@ export default function Landing() {
       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
       <div className="flex-1 text-center text-sm text-gray-600">
-        dashboard.brainly.app
+        dashboard.mindly.app
       </div>
     </div>
     <div className="relative w-full" style={{ paddingBottom: '62.79%' }}>
@@ -370,9 +370,9 @@ export default function Landing() {
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">B</span>
+                <span className="text-white font-bold">M</span>
               </div>
-              <span className="text-xl font-bold">Brainly</span>
+              <span className="text-xl font-bold">Mindly</span>
             </div>
             <p className="text-gray-400 text-sm">
               Your second brain for organizing and sharing social content.
