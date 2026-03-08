@@ -35,11 +35,13 @@ export enum Filters {
   All = "all",
   Youtube = "youtube",
   Twitter = "twitter",
+  Tag = "tag",
 }
 
 interface filterStore {
   filter: Filters;
-  setFilter: (arg: Filters) => void;
+  tagIds: string[];
+  setFilter: (arg: Filters, tagId?: string | null) => void;
 }
 
 export const useType = create<userType>((set) => ({
@@ -99,10 +101,71 @@ export const useAllContentsStore = create<AllContent>((set) => ({
   },
 }));
 
+export interface Tag {
+  _id: string;
+  title: string;
+}
+
+interface tagStore {
+  tags: Tag[];
+  loading: boolean;
+  fetchTags: () => void;
+  deleteTag: (tagId: string) => Promise<void>;
+}
+
+export const useTagsStore = create<tagStore>((set) => ({
+  tags: [],
+  loading: false,
+  fetchTags: async () => {
+    set({ loading: true });
+    try {
+      const response = await axios.get(`${BACKEND_URL}/dashboard/tags`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      set({ tags: response.data.tags, loading: false });
+    } catch (error) {
+      console.error("Error fetching tags:", error);
+      set({ loading: false });
+    }
+  },
+  deleteTag: async (tagId: string) => {
+    try {
+      await axios.delete(`${BACKEND_URL}/dashboard/tag/${tagId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      set((state) => ({
+        tags: state.tags.filter((t) => t._id !== tagId),
+      }));
+    } catch (error) {
+      console.error("Error deleting tag:", error);
+    }
+  },
+}));
+
 export const useFilterStore = create<filterStore>((set) => ({
   filter: Filters.All,
-  setFilter: (filter: Filters) => {
-    set({ filter: filter });
+  tagIds: [],
+  setFilter: (filter: Filters, tagId: string | null = null) => {
+    set((state) => {
+      if (filter !== Filters.Tag) {
+        return { filter, tagIds: [] };
+      }
+
+      if (!tagId) return state;
+
+      const newTagIds = state.tagIds.includes(tagId)
+        ? state.tagIds.filter((id) => id !== tagId)
+        : [...state.tagIds, tagId];
+
+      return {
+        filter: newTagIds.length > 0 ? Filters.Tag : Filters.All,
+        tagIds: newTagIds,
+      };
+    });
   },
 }));
 
@@ -116,6 +179,7 @@ interface ContentShareStore {
   isloading: string | null;
   error: any;
   toggleContent: (contentId: string, share: boolean) => void;
+  fetchSharedContents: () => void;
 }
 
 export const useContentShareStore = create<ContentShareStore>((set, get) => ({
@@ -157,5 +221,52 @@ export const useContentShareStore = create<ContentShareStore>((set, get) => ({
         });
       }
     } catch (error) {}
+  },
+
+  fetchSharedContents: async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/share/contentShare`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      set({ sharedContents: response.data.sharedContents });
+    } catch (error) {
+      console.error("Fetch shared contents error:", error);
+    }
+  },
+}));
+interface BrainShareStatus {
+  isShared: boolean;
+  shareLink: string;
+  loading: boolean;
+  fetchStatus: () => Promise<void>;
+  setStatus: (shared: boolean, link: string) => void;
+}
+
+export const useBrainShareStatusStore = create<BrainShareStatus>((set) => ({
+  isShared: false,
+  shareLink: "",
+  loading: false,
+  fetchStatus: async () => {
+    set({ loading: true });
+    try {
+      const response = await axios.get(`${BACKEND_URL}/share/mindShare`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.data.isShared) {
+        set({ isShared: true, shareLink: response.data.link, loading: false });
+      } else {
+        set({ isShared: false, shareLink: "", loading: false });
+      }
+    } catch (error) {
+      console.error("Fetch brain share status error:", error);
+      set({ isShared: false, shareLink: "", loading: false });
+    }
+  },
+  setStatus: (isShared, shareLink) => {
+    set({ isShared, shareLink });
   },
 }));

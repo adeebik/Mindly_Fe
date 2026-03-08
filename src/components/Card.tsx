@@ -10,7 +10,7 @@ interface CardProps {
   sharedContents: Record<string, SharedCont>;
   content: Contents;
   onShare?: (contentId: string) => void;
-  onDelete?: (arg: string) => void;
+  onDelete?: (id: string, title: string) => void;
 }
 
 export default function Card({
@@ -29,18 +29,22 @@ export default function Card({
               {content.title}
             </div>
             <div className="buttons flex gap-1">
-              <Button
-                variant={isShared ? "primary" : "outline"}
-                onclick={() => onShare?.(content._id)}
-                size="xs"
-                startIcon={<Share2 size={14} />}
-              />
-              <Button
-                variant="dangerOutline"
-                onclick={() => onDelete?.(content._id)}
-                size="xs"
-                startIcon={<Trash2 size={14} />}
-              />
+              {onShare && (
+                <Button
+                  variant={isShared ? "primary" : "outline"}
+                  onclick={() => onShare?.(content._id)}
+                  size="xs"
+                  startIcon={<Share2 size={14} />}
+                />
+              )}
+              {onDelete && (
+                <Button
+                  variant="dangerOutline"
+                  onclick={() => onDelete?.(content._id, content.title)}
+                  size="xs"
+                  startIcon={<Trash2 size={14} />}
+                />
+              )}
             </div>
           </div>
           <div className="desc mb-2">

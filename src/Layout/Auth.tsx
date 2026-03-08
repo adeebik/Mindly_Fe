@@ -9,6 +9,8 @@ interface AuthProps {
   redirectTitle: string;
   redirectLink: string;
   redirectText: string;
+  error?: string | null;
+  message?: string | null;
 }
 
 export default function Auth(props: AuthProps) {
@@ -27,6 +29,16 @@ export default function Auth(props: AuthProps) {
             </p>
             <p className="text-sm  text-zinc-500">{props.subtitle}</p>
           </div>
+          {props.error && (
+            <div className="w-full bg-red-50 border border-red-200 text-red-600 px-4 py-2 rounded-md text-sm text-center">
+              {props.error}
+            </div>
+          )}
+          {props.message && (
+            <div className="w-full bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-md text-sm text-center">
+              {props.message}
+            </div>
+          )}
           <div className="inputs flex flex-col w-full gap-4 my-2">
             {props.children}
           </div>

@@ -2,7 +2,8 @@ import Modal from "../Modal";
 import { useState, useEffect } from "react";
 import { Check, Copy, ExternalLink, Loader2 } from "lucide-react";
 import axios from "axios";
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL, FRONTEND_URL } from "../../config";
+import { useBrainShareStatusStore } from "../../Store/store";
 
 interface BrainShareModalProps {
   open: boolean;
@@ -10,50 +11,19 @@ interface BrainShareModalProps {
 }
 
 export default function BrainShareModal({ open, onClose }: BrainShareModalProps) {
-  const [isShared, setIsShared] = useState(false);
-  const [shareLink, setShareLink] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { isShared, shareLink, loading, fetchStatus, setStatus } = useBrainShareStatusStore();
   const [copied, setCopied] = useState(false);
+  const [toggleLoading, setToggleLoading] = useState(false);
 
 
   useEffect(() => {
     if (open) {
-      fetchBrainShareStatus();
+      fetchStatus();
     }
   }, [open]);
 
-  const fetchBrainShareStatus = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `${BACKEND_URL}/share/mindShare`,
-        { share: true },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      const link = 
-        response.data.link || 
-        response.data["Here is your Sharable Link"] ||
-        response.data["Link already created "];
-
-      if (link) {
-        setIsShared(true);
-        setShareLink(link);
-      }
-    } catch (error) {
-      setIsShared(false);
-      setShareLink("");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleToggle = async () => {
-    setLoading(true);
+    setToggleLoading(true);
     try {
       const response = await axios.post(
         `${BACKEND_URL}/share/mindShare`,
@@ -66,33 +36,22 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
       );
 
       if (!isShared) {
-
         const link = 
           response.data.link || 
           response.data["Here is your Sharable Link"] ||
           response.data["Link already created "];
         
-        setIsShared(true);
-        setShareLink(link);
+        setStatus(true, link);
       } else {
-        // Disabling share
-        setIsShared(false);
-        setShareLink("");
+        setStatus(false, "");
       }
     } catch (error: any) {
       console.error("Toggle brain share error:", error);
     } finally {
-      setLoading(false);
+      setToggleLoading(false);
     }
   };
 
-  const handleCopy = () => {
-    if (shareLink) {
-      navigator.clipboard.writeText(shareLink);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   return (
     <div>
@@ -110,10 +69,10 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
             </div>
             <button
               onClick={handleToggle}
-              disabled={loading}
+              disabled={toggleLoading}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
                 isShared ? "bg-blue-600" : "bg-gray-300"
-              } ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+              } ${toggleLoading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -139,12 +98,16 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
               <div className="flex gap-2 mt-1">
                 <input
                   type="text"
-                  value={shareLink}
+                  value={FRONTEND_URL + "/share/" + shareLink}
                   readOnly
                   className="flex-1 px-4 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-zinc-600"
                 />
                 <button
-                  onClick={handleCopy}
+                  onClick={() => {
+                    navigator.clipboard.writeText(FRONTEND_URL + "/share/" + shareLink);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
                 >
                   {copied ? (
@@ -161,7 +124,7 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
                 </button>
               </div>
               <a
-                href={shareLink}
+                href={FRONTEND_URL + "/share/" + shareLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"

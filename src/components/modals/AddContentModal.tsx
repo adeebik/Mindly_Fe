@@ -2,10 +2,11 @@ import { Twitter, Youtube } from "lucide-react";
 import Input from "../Input";
 import Modal from "../Modal";
 import Button from "../Button";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
-import { ContentType, useType } from "../../Store/store";
+import { ContentType, useType, useTagsStore } from "../../Store/store";
+import { Hash } from "lucide-react";
 
 interface AddContentProps {
   open: boolean;
@@ -21,6 +22,43 @@ export default function AddContentModal({ open, onClose }: AddContentProps) {
 
   const setType = useType((state) => state.setType);
 
+  const { tags, fetchTags } = useTagsStore();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [newTagName, setNewTagName] = useState("");
+
+  useEffect(() => {
+    if (open) {
+      fetchTags();
+    }
+  }, [open]);
+
+  async function handleAddTag() {
+    if (!newTagName.trim()) return;
+    try {
+      await axios.post(
+        `${BACKEND_URL}/dashboard/tag`,
+        { title: newTagName.trim() },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setNewTagName("");
+      fetchTags();
+    } catch (error) {
+      console.error("Error creating tag", error);
+    }
+  }
+
+  function toggleTag(tagId: string) {
+    setSelectedTags((prev) =>
+      prev.includes(tagId)
+        ? prev.filter((id) => id !== tagId)
+        : [...prev, tagId]
+    );
+  }
+
   async function addContent() {
     const title = titleRef.current?.value;
     const description = descRef.current?.value;
@@ -35,18 +73,19 @@ export default function AddContentModal({ open, onClose }: AddContentProps) {
           type: type,
           description: description,
           link: link,
-          tag: [],
+          tags: selectedTags,
         },
         {
           headers: {
             Authorization: `${"Bearer " + localStorage.getItem("token")}`,
           },
-        }
+        },
       );
-
-    } catch (error) {}
-
-    onClose();
+      setSelectedTags([]);
+      onClose();
+    } catch (error) {
+      console.error("Error adding content", error);
+    }
   }
 
   return (
@@ -112,6 +151,41 @@ export default function AddContentModal({ open, onClose }: AddContentProps) {
                 : "Twitter Url"
             }
           />
+
+          <div className="tags-section flex flex-col gap-1 my-4">
+            <label className="text-zinc-900 text-sm">Tags</label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {tags.map((tag) => (
+                <button
+                  key={tag._id}
+                  onClick={() => toggleTag(tag._id)}
+                  className={`px-3 py-1 rounded-full text-xs flex items-center gap-1 transition-all ${
+                    selectedTags.includes(tag._id)
+                      ? "bg-blue-600 text-white"
+                      : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                  }`}
+                >
+                  <Hash size={10} /> {tag.title}
+                </button>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newTagName}
+                onChange={(e) => setNewTagName(e.target.value)}
+                placeholder="New tag..."
+                className="flex-1 border border-slate-300 px-3 py-2 rounded-lg text-sm focus:border-blue-500 focus:outline-none"
+                onKeyDown={(e) => e.key === "Enter" && handleAddTag()}
+              />
+              <Button
+                variant="secondary"
+                size="sm"
+                onclick={handleAddTag}
+                text="Add"
+              />
+            </div>
+          </div>
 
           <div className="endbtns flex gap-2 mt-8 mb-2">
             <Button

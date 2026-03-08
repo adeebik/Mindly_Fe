@@ -10,6 +10,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   type?: "submit" | "button";
   children?: ReactElement,
+  className?: string;
 }
 
 const variantStyle = {
@@ -41,7 +42,7 @@ export default function Button(props: ButtonProps) {
       onClick={props.onclick}
       className={`${variantStyle[props.variant]} ${sizeStyle[props.size]} ${
         props.fullWidth ? "w-full" : ""
-      } ${defaultStyles}`}
+      } ${defaultStyles} ${props.className || ""}`}
     >
       {props.startIcon}
       {props.text}

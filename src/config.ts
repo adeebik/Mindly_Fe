@@ -1,2 +1,2 @@
-export const BACKEND_URL = "https://mindly-be.onrender.com";
-export const FRONTEND_URL = "https://mindly-fe-five.vercel.app/";
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+export const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;

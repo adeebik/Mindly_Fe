@@ -10,12 +10,16 @@ import {
   useAddModalStore,
   useAllContentsStore,
   useBrainShareModalStore,
+  useBrainShareStatusStore,
   useContentShareStore,
   useFilterStore,
   useShareModalStore,
+  useTagsStore,
 } from "../Store/store";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import DeleteConfirmationModal from "../components/modals/DeleteConfirmationModal";
+import { useState } from "react";
 
 export default function Dashboard() {
   const addmodal = useAddModalStore((state) => state.isOpen);
@@ -31,33 +35,57 @@ export default function Dashboard() {
   const { contents, fetchContent, loading } = useAllContentsStore();
 
   const selectedFilter = useFilterStore((state) => state.filter);
+  const selectedTagIds = useFilterStore((state) => state.tagIds);
   const setSelectedFilter = useFilterStore((state) => state.setFilter);
 
-  const { sharedContents, isloading, toggleContent } = useContentShareStore();
+  const { sharedContents, isloading, toggleContent, fetchSharedContents } = useContentShareStore();
+  const { fetchTags } = useTagsStore();
+  const { fetchStatus } = useBrainShareStatusStore();
+
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<{ id: string; title: string } | null>(null);
 
   const filtered =
     selectedFilter === Filters.All
       ? contents
+      : selectedFilter === Filters.Tag
+      ? contents.filter((c) => 
+          selectedTagIds.every((tagId) => c.tags.some((t) => t._id === tagId))
+        )
       : contents.filter((c) => c.type === selectedFilter);
 
-  async function handleDelete(_id: string) {
+  async function confirmDelete() {
+    if (!itemToDelete) return;
     try {
-      if (confirm("Delete this content?")) {
-        await axios.post(
-          `${BACKEND_URL + "/dashboard/delete"}`,
-          {
-            contentId: _id,
+      await axios.post(
+        `${BACKEND_URL + "/dashboard/delete"}`,
+        {
+          contentId: itemToDelete.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        fetchContent();
-      }
-    } catch (error) {}
+        },
+      );
+      fetchContent();
+      setDeleteModalOpen(false);
+      setItemToDelete(null);
+    } catch (error) {
+      console.error("Error deleting content:", error);
+    }
   }
+
+  function handleDelete(_id: string, title: string) {
+    setItemToDelete({ id: _id, title });
+    setDeleteModalOpen(true);
+  }
+  
+  useEffect(() => {
+    fetchSharedContents();
+    fetchTags();
+    fetchStatus();
+  }, []);
 
   useEffect(() => {
     fetchContent();
@@ -82,6 +110,7 @@ export default function Dashboard() {
       <Navbar username={username} toggleModal={toggleBrain} />
       <Sidebar
         selected={selectedFilter}
+        selectedTagIds={selectedTagIds}
         setFilter={setSelectedFilter}
         toggleModal={toggleAdd}
         totalCount={contents.length}
@@ -132,6 +161,12 @@ export default function Dashboard() {
 
           <BrainShareModal open={brainmodal} onClose={toggleBrain} />
           <AddContentModal open={addmodal} onClose={toggleAdd} />
+          <DeleteConfirmationModal
+            open={deleteModalOpen}
+            onClose={() => setDeleteModalOpen(false)}
+            onConfirm={confirmDelete}
+            title={itemToDelete?.title || ""}
+          />
         </>
       )}
     </>

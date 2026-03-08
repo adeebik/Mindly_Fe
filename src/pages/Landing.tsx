@@ -7,7 +7,6 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-
       <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-200 px-6 py-4 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -33,25 +32,25 @@ export default function Landing() {
         </div>
       </nav>
 
-
       <section className="max-w-7xl mx-auto px-6 py-20 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
             <Zap size={16} />
             Your Second Brain for Social Content
           </div>
-          
+
           <h1 className="text-6xl font-bold text-gray-900 leading-tight">
             Save, Organize & Share
             <br />
             <span className="text-blue-600">Your Favorite Content</span>
           </h1>
-          
+
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Keep track of YouTube videos and Twitter posts in one beautiful place. 
-            Organize with tags, share with anyone, and never lose great content again.
+            Keep track of YouTube videos and Twitter posts in one beautiful
+            place. Organize with tags, share with anyone, and never lose great
+            content again.
           </p>
-          
+
           <div className="flex items-center justify-center gap-4 pt-4">
             <Button
               variant="primary"
@@ -64,8 +63,8 @@ export default function Landing() {
               size="lg"
               text="See How It Works"
               onclick={() => {
-                document.getElementById('features')?.scrollIntoView({ 
-                  behavior: 'smooth' 
+                document.getElementById("features")?.scrollIntoView({
+                  behavior: "smooth",
                 });
               }}
             />
@@ -87,30 +86,30 @@ export default function Landing() {
           </div>
         </div>
 
-       <div className="mt-16 max-w-5xl mx-auto">
-  <div className="rounded-2xl border-4 border-gray-200 shadow-2xl overflow-hidden bg-white">
-    <div className="bg-gray-100 px-4 py-3 flex items-center gap-2 border-b border-gray-200">
-      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-      <div className="flex-1 text-center text-sm text-gray-600">
-        dashboard.mindly.app
-      </div>
-    </div>
-    <div className="relative w-full" style={{ paddingBottom: '62.79%' }}>
-      <iframe
-        src="https://www.loom.com/embed/abdf456ddfae4eb08687f7b74174b3ca?autoplay=1&loop=1&hideEmbedTopBar=true"
-        frameBorder="0"
-        allowFullScreen
-        className="absolute top-0 left-0 w-full h-full"
-      />
-    </div>
-  </div>
-</div>
-
-   
+        <div className="mt-16 max-w-5xl mx-auto">
+          <div className="rounded-2xl border-4 border-gray-200 shadow-2xl overflow-hidden bg-white">
+            <div className="bg-gray-100 px-4 py-3 flex items-center gap-2 border-b border-gray-200">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="flex-1 text-center text-sm text-gray-600">
+                dashboard.mindly.app
+              </div>
+            </div>
+            <div
+              className="relative w-full"
+              style={{ paddingBottom: "62.79%" }}
+            >
+              <iframe
+                src="https://www.loom.com/embed/abdf456ddfae4eb08687f7b74174b3ca?autoplay=1&loop=1&hideEmbedTopBar=true"
+                frameBorder="0"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
       </section>
-
 
       <section id="features" className="max-w-7xl mx-auto px-6 py-20">
         <div className="text-center mb-16">
@@ -131,7 +130,8 @@ export default function Landing() {
               YouTube Videos
             </h3>
             <p className="text-gray-600 mb-4">
-              Save and embed YouTube videos directly in your collection. Watch them without leaving the app.
+              Save and embed YouTube videos directly in your collection. Watch
+              them without leaving the app.
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">
@@ -157,7 +157,8 @@ export default function Landing() {
               Twitter Posts
             </h3>
             <p className="text-gray-600 mb-4">
-              Keep track of important tweets and threads. Never lose that perfect tweet again.
+              Keep track of important tweets and threads. Never lose that
+              perfect tweet again.
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">
@@ -175,7 +176,6 @@ export default function Landing() {
             </ul>
           </div>
 
-
           <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
             <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
               <Tag className="text-purple-600" size={28} />
@@ -184,7 +184,8 @@ export default function Landing() {
               Smart Organization
             </h3>
             <p className="text-gray-600 mb-4">
-              Use tags to categorize your content. Find anything in seconds with powerful search.
+              Use tags to categorize your content. Find anything in seconds with
+              powerful search.
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">
@@ -202,7 +203,6 @@ export default function Landing() {
             </ul>
           </div>
 
-
           <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
             <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6">
               <Share2 className="text-green-600" size={28} />
@@ -211,7 +211,8 @@ export default function Landing() {
               Easy Sharing
             </h3>
             <p className="text-gray-600 mb-4">
-              Share your entire collection or individual items with a single link. No signup required for viewers.
+              Share your entire collection or individual items with a single
+              link. No signup required for viewers.
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">
@@ -229,7 +230,6 @@ export default function Landing() {
             </ul>
           </div>
 
-
           <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
             <div className="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
               <Brain className="text-indigo-600" size={28} />
@@ -238,7 +238,8 @@ export default function Landing() {
               Your Second Brain
             </h3>
             <p className="text-gray-600 mb-4">
-              Build your personal knowledge base. Save insights, learnings, and inspiration in one place.
+              Build your personal knowledge base. Save insights, learnings, and
+              inspiration in one place.
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">
@@ -256,7 +257,6 @@ export default function Landing() {
             </ul>
           </div>
 
-
           <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
             <div className="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center mb-6">
               <Lock className="text-yellow-600" size={28} />
@@ -265,7 +265,8 @@ export default function Landing() {
               Private & Secure
             </h3>
             <p className="text-gray-600 mb-4">
-              Your content is private by default. You control who sees what with granular sharing controls.
+              Your content is private by default. You control who sees what with
+              granular sharing controls.
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">
@@ -284,7 +285,6 @@ export default function Landing() {
           </div>
         </div>
       </section>
-
 
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-6">
@@ -306,7 +306,8 @@ export default function Landing() {
                 Sign Up Free
               </h3>
               <p className="text-gray-600">
-                Create your account in seconds. No credit card required, no commitment.
+                Create your account in seconds. No credit card required, no
+                commitment.
               </p>
             </div>
 
@@ -318,7 +319,8 @@ export default function Landing() {
                 Save Content
               </h3>
               <p className="text-gray-600">
-                Paste YouTube or Twitter links. Add tags and descriptions to organize.
+                Paste YouTube or Twitter links. Add tags and descriptions to
+                organize.
               </p>
             </div>
 
@@ -330,13 +332,13 @@ export default function Landing() {
                 Share & Enjoy
               </h3>
               <p className="text-gray-600">
-                Access your content anywhere. Share collections with friends or keep them private.
+                Access your content anywhere. Share collections with friends or
+                keep them private.
               </p>
             </div>
           </div>
         </div>
       </section>
-
 
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-12 text-center text-white">
@@ -344,8 +346,8 @@ export default function Landing() {
             Ready to Build Your Second Brain?
           </h2>
           <p className="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
-            Join thousands of users organizing their favorite content. 
-            Start free, no credit card required.
+            Join thousands of users organizing their favorite content. Start
+            free, no credit card required.
           </p>
           <div className="flex items-center justify-center gap-4">
             <Button
@@ -364,11 +366,10 @@ export default function Landing() {
         </div>
       </section>
 
-
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="mb-8 flex flex-col items-center justify-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">M</span>
               </div>
