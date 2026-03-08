@@ -10,7 +10,7 @@ interface CardProps {
   sharedContents: Record<string, SharedCont>;
   content: Contents;
   onShare?: (contentId: string) => void;
-  onDelete?: (arg: string) => void;
+  onDelete?: (id: string, title: string) => void;
 }
 
 export default function Card({
@@ -40,7 +40,7 @@ export default function Card({
               {onDelete && (
                 <Button
                   variant="dangerOutline"
-                  onclick={() => onDelete?.(content._id)}
+                  onclick={() => onDelete?.(content._id, content.title)}
                   size="xs"
                   startIcon={<Trash2 size={14} />}
                 />
