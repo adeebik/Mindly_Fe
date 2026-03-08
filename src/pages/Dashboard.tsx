@@ -10,9 +10,11 @@ import {
   useAddModalStore,
   useAllContentsStore,
   useBrainShareModalStore,
+  useBrainShareStatusStore,
   useContentShareStore,
   useFilterStore,
   useShareModalStore,
+  useTagsStore,
 } from "../Store/store";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -31,13 +33,20 @@ export default function Dashboard() {
   const { contents, fetchContent, loading } = useAllContentsStore();
 
   const selectedFilter = useFilterStore((state) => state.filter);
+  const selectedTagIds = useFilterStore((state) => state.tagIds);
   const setSelectedFilter = useFilterStore((state) => state.setFilter);
 
   const { sharedContents, isloading, toggleContent, fetchSharedContents } = useContentShareStore();
+  const { fetchTags } = useTagsStore();
+  const { fetchStatus } = useBrainShareStatusStore();
 
   const filtered =
     selectedFilter === Filters.All
       ? contents
+      : selectedFilter === Filters.Tag
+      ? contents.filter((c) => 
+          selectedTagIds.every((tagId) => c.tags.some((t) => t._id === tagId))
+        )
       : contents.filter((c) => c.type === selectedFilter);
 
   async function handleDelete(_id: string) {
@@ -61,6 +70,8 @@ export default function Dashboard() {
   
   useEffect(() => {
     fetchSharedContents();
+    fetchTags();
+    fetchStatus();
   }, []);
 
   useEffect(() => {
@@ -86,6 +97,7 @@ export default function Dashboard() {
       <Navbar username={username} toggleModal={toggleBrain} />
       <Sidebar
         selected={selectedFilter}
+        selectedTagIds={selectedTagIds}
         setFilter={setSelectedFilter}
         toggleModal={toggleAdd}
         totalCount={contents.length}
