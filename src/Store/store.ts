@@ -116,6 +116,7 @@ interface ContentShareStore {
   isloading: string | null;
   error: any;
   toggleContent: (contentId: string, share: boolean) => void;
+  fetchSharedContents: () => void;
 }
 
 export const useContentShareStore = create<ContentShareStore>((set, get) => ({
@@ -157,5 +158,18 @@ export const useContentShareStore = create<ContentShareStore>((set, get) => ({
         });
       }
     } catch (error) {}
+  },
+
+  fetchSharedContents: async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/share/contentShare`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      set({ sharedContents: response.data.sharedContents });
+    } catch (error) {
+      console.error("Fetch shared contents error:", error);
+    }
   },
 }));

@@ -2,7 +2,7 @@ import Modal from "../Modal";
 import { useState, useEffect } from "react";
 import { Check, Copy, ExternalLink, Loader2 } from "lucide-react";
 import axios from "axios";
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL, FRONTEND_URL } from "../../config";
 
 interface BrainShareModalProps {
   open: boolean;
@@ -25,9 +25,8 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
   const fetchBrainShareStatus = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         `${BACKEND_URL}/share/mindShare`,
-        { share: true },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -35,14 +34,12 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
         }
       );
 
-      const link = 
-        response.data.link || 
-        response.data["Here is your Sharable Link"] ||
-        response.data["Link already created "];
-
-      if (link) {
+      if (response.data.isShared) {
         setIsShared(true);
-        setShareLink(link);
+        setShareLink(response.data.link);
+      } else {
+        setIsShared(false);
+        setShareLink("");
       }
     } catch (error) {
       setIsShared(false);
@@ -85,13 +82,6 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
     }
   };
 
-  const handleCopy = () => {
-    if (shareLink) {
-      navigator.clipboard.writeText(shareLink);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   return (
     <div>
@@ -138,12 +128,16 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
               <div className="flex gap-2 mt-1">
                 <input
                   type="text"
-                  value={shareLink}
+                  value={FRONTEND_URL + "/share/" + shareLink}
                   readOnly
                   className="flex-1 px-4 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-zinc-600"
                 />
                 <button
-                  onClick={handleCopy}
+                  onClick={() => {
+                    navigator.clipboard.writeText(FRONTEND_URL + "/share/" + shareLink);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
                 >
                   {copied ? (
@@ -160,7 +154,7 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
                 </button>
               </div>
               <a
-                href={shareLink}
+                href={FRONTEND_URL + "/share/" + shareLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"

@@ -33,7 +33,7 @@ export default function Dashboard() {
   const selectedFilter = useFilterStore((state) => state.filter);
   const setSelectedFilter = useFilterStore((state) => state.setFilter);
 
-  const { sharedContents, isloading, toggleContent } = useContentShareStore();
+  const { sharedContents, isloading, toggleContent, fetchSharedContents } = useContentShareStore();
 
   const filtered =
     selectedFilter === Filters.All
@@ -58,6 +58,10 @@ export default function Dashboard() {
       }
     } catch (error) {}
   }
+  
+  useEffect(() => {
+    fetchSharedContents();
+  }, []);
 
   useEffect(() => {
     fetchContent();

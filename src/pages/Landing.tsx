@@ -368,8 +368,8 @@ export default function Landing() {
 
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="mb-8 flex flex-col items-center justify-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">M</span>
               </div>
@@ -382,7 +382,7 @@ export default function Landing() {
 
           <div className="border-t border-gray-800 pt-8">
             <p className="text-gray-400 text-sm text-center">
-              © 2024 Brainly. All rights reserved.
+              © 2026 Mindly. All rights reserved.
             </p>
           </div>
         </div>
