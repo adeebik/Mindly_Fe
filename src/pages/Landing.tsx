@@ -379,12 +379,6 @@ export default function Landing() {
               Your second brain for organizing and sharing social content.
             </p>
           </div>
-
-          <div className="border-t border-gray-800 pt-8">
-            <p className="text-gray-400 text-sm text-center">
-              © 2026 Mindly. All rights reserved.
-            </p>
-          </div>
         </div>
       </footer>
     </div>
