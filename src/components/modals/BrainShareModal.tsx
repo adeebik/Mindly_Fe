@@ -75,7 +75,6 @@ export default function BrainShareModal({ open, onClose }: BrainShareModalProps)
         setIsShared(true);
         setShareLink(link);
       } else {
-        // Disabling share
         setIsShared(false);
         setShareLink("");
       }

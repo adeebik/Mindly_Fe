@@ -21,13 +21,13 @@ export default function SharedContent() {
 
       try {
         const response = await axios.get(
-          `${BACKEND_URL}/share/content/${hash}`
+          `${BACKEND_URL}/share/content/${hash}`,
         );
         setContent(response.data.content);
       } catch (err: any) {
         console.error("Error fetching shared content:", err);
         setError(
-          err.response?.data?.msg || "Content not found or link expired"
+          err.response?.data?.msg || "Content not found or link expired",
         );
       } finally {
         setLoading(false);

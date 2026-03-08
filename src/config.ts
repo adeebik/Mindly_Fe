@@ -1,2 +1,5 @@
-export const BACKEND_URL = "https://mindly-be.onrender.com";
-export const FRONTEND_URL = "https://mindly-fe-five.vercel.app/";
+import * as dotenv from "dotenv";
+dotenv.config()
+
+export const BACKEND_URL = process.env.BACKEND_URL;
+export const FRONTEND_URL = process.env.FRONTEND_URL;
